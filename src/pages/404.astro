@@ -2,27 +2,49 @@
 import Layout from '@/layouts/Layout.astro'
 ---
 
-<Layout title="404 - Page Not Found">
-  <div class="min-h-[70vh] flex flex-col items-center justify-center text-center">
-    <h1 class="text-9xl font-black text-base-content mb-4">404</h1>
-    <h2 class="text-4xl font-bold text-base-content mb-8">Page Not Found</h2>
-      <p class="text-lg text-base-content/80 mb-8">
-        Looks like this page went on a coffee break. ☕<br/>
-        Even our smartest algorithms couldn't find it!
-      </p>
-    <div class="flex gap-4">
-      <a
-        href="/"
-        class="btn btn-primary text-primary-content"
-      >
-        Go Home
-      </a>
-      <button
-        class="btn btn-outline btn-accent"
-        onclick="history.back()"
-      >
-        Go Back
-      </button>
+<Layout title="Projects">
+  <div class="min-h-[70vh] flex flex-col items-center justify-center text-center px-6">
+    <h2 class="text-4xl font-extrabold text-base-content mb-12 drop-shadow-lg">
+      ✨ My Project ✨
+    </h2>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10 w-full max-w-6xl">
+      <!-- Card Project -->
+      {[
+        { img: "/images/gambar1.png", title: "Project One", desc: "Membuat Website tentang produk makanan gurih web-seo." },
+        { img: "/images/gambar2.png", title: "Project Two", desc: "Membuat Database Restaurant menggunakan MsyQl." },
+        { img: "/images/gambar3.png", title: "Project Three", desc: "Membuat CISCO." },
+        { img: "/images/project-4.png", title: "Project Four", desc: "Landing page promosi dengan animasi interaktif." },
+      ].map((project, i) => (
+        <div 
+          class="reveal opacity-0 translate-y-10 group relative rounded-3xl overflow-hidden backdrop-blur-lg bg-white/10 dark:bg-black/20 border border-white/20 shadow-xl transition duration-700 ease-out"
+          style={`transition-delay: ${i * 150}ms`}
+        >
+          <img src={project.img} alt={project.title} class="w-full h-64 object-cover opacity-90 group-hover:opacity-100 transition duration-500" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-60 group-hover:opacity-80 transition"></div>
+          <div class="absolute bottom-0 p-6 text-left text-white">
+            <h3 class="text-2xl font-bold mb-2 group-hover:text-primary transition">{project.title}</h3>
+            <p class="text-sm opacity-80">{project.desc}</p>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
+
+  <script>
+    // Intersection Observer untuk animasi scroll reveal
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-10");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
 </Layout>
